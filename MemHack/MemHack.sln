@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MemHack", "MemHack\MemHack.vcxproj", "{29DBF6B0-25EA-4A2E-A595-E5A5409F1620}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MemCDll", "MemCDll\MemCDll.vcxproj", "{7ECB41AA-7830-4AC0-8801-8E7E4E7055C7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29DBF6B0-25EA-4A2E-A595-E5A5409F1620}.Debug|Win32.ActiveCfg = Debug|Win32
+		{29DBF6B0-25EA-4A2E-A595-E5A5409F1620}.Debug|Win32.Build.0 = Debug|Win32
+		{29DBF6B0-25EA-4A2E-A595-E5A5409F1620}.Release|Win32.ActiveCfg = Release|Win32
+		{29DBF6B0-25EA-4A2E-A595-E5A5409F1620}.Release|Win32.Build.0 = Release|Win32
+		{7ECB41AA-7830-4AC0-8801-8E7E4E7055C7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7ECB41AA-7830-4AC0-8801-8E7E4E7055C7}.Debug|Win32.Build.0 = Debug|Win32
+		{7ECB41AA-7830-4AC0-8801-8E7E4E7055C7}.Release|Win32.ActiveCfg = Release|Win32
+		{7ECB41AA-7830-4AC0-8801-8E7E4E7055C7}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
