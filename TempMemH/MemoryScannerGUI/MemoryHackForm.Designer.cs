@@ -37,6 +37,7 @@
             this.StartValueBox = new System.Windows.Forms.TextBox();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.MemoryTab = new System.Windows.Forms.TabPage();
+            this.refresh_memoryBTN = new System.Windows.Forms.Button();
             this.Prev100 = new System.Windows.Forms.Button();
             this.Next100 = new System.Windows.Forms.Button();
             this.MatchNumLB = new System.Windows.Forms.Label();
@@ -59,6 +60,7 @@
             this.ValueCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
+            this.AddressBox = new System.Windows.Forms.TextBox();
             this.MainTabControl.SuspendLayout();
             this.ProcessTab.SuspendLayout();
             this.MemoryTab.SuspendLayout();
@@ -92,7 +94,7 @@
             // 
             this.MainTabControl.Controls.Add(this.ProcessTab);
             this.MainTabControl.Controls.Add(this.MemoryTab);
-            this.MainTabControl.Location = new System.Drawing.Point(0, 0);
+            this.MainTabControl.Location = new System.Drawing.Point(0, 1);
             this.MainTabControl.Name = "MainTabControl";
             this.MainTabControl.SelectedIndex = 0;
             this.MainTabControl.Size = new System.Drawing.Size(400, 408);
@@ -147,6 +149,8 @@
             // MemoryTab
             // 
             this.MemoryTab.BackColor = System.Drawing.Color.White;
+            this.MemoryTab.Controls.Add(this.AddressBox);
+            this.MemoryTab.Controls.Add(this.refresh_memoryBTN);
             this.MemoryTab.Controls.Add(this.Prev100);
             this.MemoryTab.Controls.Add(this.Next100);
             this.MemoryTab.Controls.Add(this.MatchNumLB);
@@ -172,22 +176,32 @@
             this.MemoryTab.TabIndex = 1;
             this.MemoryTab.Text = "Memory";
             // 
+            // refresh_memoryBTN
+            // 
+            this.refresh_memoryBTN.Location = new System.Drawing.Point(213, 324);
+            this.refresh_memoryBTN.Name = "refresh_memoryBTN";
+            this.refresh_memoryBTN.Size = new System.Drawing.Size(75, 23);
+            this.refresh_memoryBTN.TabIndex = 13;
+            this.refresh_memoryBTN.Text = "Refresh";
+            this.refresh_memoryBTN.UseVisualStyleBackColor = true;
+            this.refresh_memoryBTN.Click += new System.EventHandler(this.refresh_memoryBTN_Click);
+            // 
             // Prev100
             // 
-            this.Prev100.Location = new System.Drawing.Point(207, 350);
+            this.Prev100.Location = new System.Drawing.Point(214, 353);
             this.Prev100.Name = "Prev100";
             this.Prev100.Size = new System.Drawing.Size(75, 23);
-            this.Prev100.TabIndex = 16;
+            this.Prev100.TabIndex = 15;
             this.Prev100.Text = "Prev 100";
             this.Prev100.UseVisualStyleBackColor = true;
             this.Prev100.Click += new System.EventHandler(this.Prev100_Click);
             // 
             // Next100
             // 
-            this.Next100.Location = new System.Drawing.Point(208, 316);
+            this.Next100.Location = new System.Drawing.Point(311, 353);
             this.Next100.Name = "Next100";
             this.Next100.Size = new System.Drawing.Size(75, 23);
-            this.Next100.TabIndex = 15;
+            this.Next100.TabIndex = 16;
             this.Next100.Text = "Next 100";
             this.Next100.UseVisualStyleBackColor = true;
             this.Next100.Click += new System.EventHandler(this.Next100_Click);
@@ -221,16 +235,20 @@
             // 
             // EditValueBox
             // 
-            this.EditValueBox.Location = new System.Drawing.Point(295, 261);
+            this.EditValueBox.ForeColor = System.Drawing.Color.Gray;
+            this.EditValueBox.Location = new System.Drawing.Point(295, 274);
             this.EditValueBox.MaxLength = 10;
             this.EditValueBox.Name = "EditValueBox";
             this.EditValueBox.Size = new System.Drawing.Size(91, 20);
             this.EditValueBox.TabIndex = 11;
+            this.EditValueBox.Text = "[Value]";
+            this.EditValueBox.Enter += new System.EventHandler(this.EditValueBox_Enter);
+            this.EditValueBox.Leave += new System.EventHandler(this.EditValueBox_Leave);
             // 
             // BetweenBox
             // 
             this.BetweenBox.Location = new System.Drawing.Point(250, 204);
-            this.BetweenBox.MaxLength = 10;
+            this.BetweenBox.MaxLength = 9;
             this.BetweenBox.Name = "BetweenBox";
             this.BetweenBox.Size = new System.Drawing.Size(94, 20);
             this.BetweenBox.TabIndex = 9;
@@ -340,21 +358,22 @@
             this.MemoryInfoList.TabIndex = 0;
             this.MemoryInfoList.UseCompatibleStateImageBehavior = false;
             this.MemoryInfoList.View = System.Windows.Forms.View.Details;
+            this.MemoryInfoList.SelectedIndexChanged += new System.EventHandler(this.MemoryInfoList_SelectedIndexChanged);
             // 
             // IndexOfMatch
             // 
             this.IndexOfMatch.Text = "#";
-            this.IndexOfMatch.Width = 25;
+            this.IndexOfMatch.Width = 34;
             // 
             // AddrCol
             // 
             this.AddrCol.Text = "Address";
-            this.AddrCol.Width = 81;
+            this.AddrCol.Width = 84;
             // 
             // ValueCol
             // 
             this.ValueCol.Text = "Value";
-            this.ValueCol.Width = 95;
+            this.ValueCol.Width = 83;
             // 
             // shapeContainer1
             // 
@@ -374,6 +393,18 @@
             this.lineShape1.X2 = 72;
             this.lineShape1.Y1 = -3;
             this.lineShape1.Y2 = 20;
+            // 
+            // AddressBox
+            // 
+            this.AddressBox.ForeColor = System.Drawing.Color.Gray;
+            this.AddressBox.Location = new System.Drawing.Point(295, 248);
+            this.AddressBox.MaxLength = 10;
+            this.AddressBox.Name = "AddressBox";
+            this.AddressBox.Size = new System.Drawing.Size(91, 20);
+            this.AddressBox.TabIndex = 18;
+            this.AddressBox.Text = "[Address]";
+            this.AddressBox.Enter += new System.EventHandler(this.AddressBox_Enter);
+            this.AddressBox.Leave += new System.EventHandler(this.AddressBox_Leave);
             // 
             // MemScanForm
             // 
@@ -426,6 +457,8 @@
         private System.Windows.Forms.Button Next100;
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
+        private System.Windows.Forms.Button refresh_memoryBTN;
+        private System.Windows.Forms.TextBox AddressBox;
     }
 }
 

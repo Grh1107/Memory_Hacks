@@ -31,6 +31,7 @@ namespace MemoryScannerGUI
         UInt32 addr;
         List<MEMINFO> Matches = new List<MEMINFO>();
         int MatchIndex = 0;
+        bool SearchInitialized = false;
 
         public MemScanForm()
         {
@@ -42,8 +43,9 @@ namespace MemoryScannerGUI
         int TotalProcesses = 0;
         public void PopulateProcesses()
         {
-            ProcessList = Process.GetProcesses();
+                ProcessList = Process.GetProcesses();
                 ProcessListView.Items.Clear();
+                
                 TotalProcesses = 0;
                 foreach (Process proc in ProcessList)
                 {
@@ -75,7 +77,6 @@ namespace MemoryScannerGUI
                 }
                 PID = (int)ProcessListView.SelectedItems[0].Tag;
 
-                MainTabControl.SelectTab(1);
                 if (hasValue)
                 {
                     MemoryScan.ConditionalScan((ulong)PID, _dataSize, (UInt32)_searchValue); 
@@ -84,8 +85,9 @@ namespace MemoryScannerGUI
                 {
                     MemoryScan.UnconditionalScan((ulong)PID, _dataSize);                  
                 }
+                MainTabControl.SelectTab(1);
+                SearchInitialized = true;
                 PopulateMatches();
-                Console.WriteLine(MemoryScan.MatchCount());
             }
         }
 
@@ -280,6 +282,30 @@ namespace MemoryScannerGUI
             }
         }
 
+        private void LastPage(int lastIndex)
+        {
+            int startIndex = lastIndex;
+            if (startIndex % 100 == 99)
+            {
+                startIndex -= 99;
+            }
+            else
+            {
+                startIndex -= startIndex % 100;
+            }
+            
+            MemoryInfoList.Items.Clear();
+
+            for (; startIndex < lastIndex+1 && startIndex < Matches.Count - 1; startIndex++)
+            {
+                MemoryInfoList.Items.Add(startIndex.ToString());
+                MemoryInfoList.Items[startIndex % 100].SubItems.Add("0x" + Matches[startIndex].addr.ToString("X"));
+                MemoryInfoList.Items[startIndex % 100].SubItems.Add(Matches[startIndex].val.ToString());
+                MemoryInfoList.Items[startIndex % 100].Tag = Matches[startIndex].addr;
+            }
+            MatchIndex = startIndex - 1;
+        }
+
         private void Next100_Click(object sender, EventArgs e)
         {
             DisplayNext100();
@@ -288,6 +314,63 @@ namespace MemoryScannerGUI
         private void Prev100_Click(object sender, EventArgs e)
         {
             DisplayPrev100();
+        }
+
+        private void refresh_memoryBTN_Click(object sender, EventArgs e)
+        {
+            if (SearchInitialized)
+            {
+                int PagePos = MatchIndex;
+                PopulateMatches();
+                LastPage(PagePos);
+            }
+
+        }
+
+        private void AddressBox_Enter(object sender, EventArgs e)
+        {
+            if (AddressBox.Text == "[Address]")
+            {
+                AddressBox.ForeColor = Color.Black;
+                AddressBox.Text = "";
+            }
+
+        }
+
+        private void AddressBox_Leave(object sender, EventArgs e)
+        {
+            if (AddressBox.Text == "")
+            {
+                AddressBox.ForeColor = Color.Gray;
+                AddressBox.Text = "[Address]";
+            }
+        }
+
+        private void EditValueBox_Enter(object sender, EventArgs e)
+        {
+            if (EditValueBox.Text == "[Value]")
+            {
+                EditValueBox.ForeColor = Color.Black;
+                EditValueBox.Text = "";
+            }
+        }
+
+        private void EditValueBox_Leave(object sender, EventArgs e)
+        {
+            if (EditValueBox.Text == "")
+            {
+                EditValueBox.ForeColor = Color.Gray;
+                EditValueBox.Text = "[Value]";
+            }
+        }
+
+        private void MemoryInfoList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (MemoryInfoList.SelectedItems.Count > 0)
+            {
+                UInt32 val = (UInt32)MemoryInfoList.SelectedItems[0].Tag;
+                AddressBox.Text = "0x"+ val.ToString("X");
+            }
         }
     }
 }
