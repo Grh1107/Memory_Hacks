@@ -27,6 +27,7 @@ namespace MemoryScannerGUI
         bool _validInfo = true;
         bool hasData = false;
         bool hasValue = false;
+        bool _validAddress = false;
         UInt32 val;
         UInt32 addr;
         List<MEMINFO> Matches = new List<MEMINFO>();
@@ -187,21 +188,28 @@ namespace MemoryScannerGUI
 
         private void EditValueBtn_Click(object sender, EventArgs e)
         {
-            if (MemoryInfoList.SelectedItems.Count > 0)
-            {
-                addr = (uint)MemoryInfoList.SelectedItems[0].Tag;
                 if (UInt32.TryParse(EditValueBox.Text, out val))
                 {
-                    if (MemoryScan.WriteAddress(addr, val))
+                    if (_validAddress)
                     {
-                        PopulateMatches();
+                        if (MemoryScan.WriteAddress(addr, val))
+                        {
+                            PopulateMatches();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to Write to Memory");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Failed to Write to Memory");
+                        MessageBox.Show("Enter A Valid Address");
                     }
                 }
-            }
+                else
+                {
+                    MessageBox.Show("Enter A Valid Value");
+                }
         }
 
         private void PopulateMatches()
@@ -255,7 +263,6 @@ namespace MemoryScannerGUI
         
         void DisplayPrev100()
         {
-            //broken
             if (MatchIndex > 99)
             {
                 MemoryInfoList.Items.Clear();
@@ -271,7 +278,7 @@ namespace MemoryScannerGUI
                 {
                     I -= 100;
                 }
-                for ( ; I < MatchIndex - PageI && I < Matches.Count - 1; I++)
+                for ( ; I < MatchIndex - PageI && I < Matches.Count; I++)
                 {
                     MemoryInfoList.Items.Add(I.ToString());
                     MemoryInfoList.Items[I%100].SubItems.Add("0x" + Matches[I].addr.ToString("X"));
@@ -284,6 +291,7 @@ namespace MemoryScannerGUI
 
         private void LastPage(int lastIndex)
         {
+            
             int startIndex = lastIndex;
             if (startIndex % 100 == 99)
             {
@@ -296,7 +304,7 @@ namespace MemoryScannerGUI
             
             MemoryInfoList.Items.Clear();
 
-            for (; startIndex < lastIndex+1 && startIndex < Matches.Count - 1; startIndex++)
+            for (; startIndex < lastIndex+1 && startIndex < Matches.Count; startIndex++)
             {
                 MemoryInfoList.Items.Add(startIndex.ToString());
                 MemoryInfoList.Items[startIndex % 100].SubItems.Add("0x" + Matches[startIndex].addr.ToString("X"));
@@ -368,8 +376,52 @@ namespace MemoryScannerGUI
         {
             if (MemoryInfoList.SelectedItems.Count > 0)
             {
-                UInt32 val = (UInt32)MemoryInfoList.SelectedItems[0].Tag;
-                AddressBox.Text = "0x"+ val.ToString("X");
+                AddressBox.Text = "0x"+ addr.ToString("X");
+            }
+        }
+
+        private void AddressBox_TextChanged(object sender, EventArgs e)
+        {
+            _validAddress = true;
+            string HexAddress = AddressBox.Text;
+            if(HexAddress.Substring(0, 2) == "0x")
+            {
+                HexAddress = HexAddress.Substring(2, HexAddress.Length-2);
+            }
+            try
+            {
+                addr = Convert.ToUInt32(HexAddress, 16);
+            }
+            catch
+            {
+                _validAddress = false;
+            }
+        }
+
+        private void SpecificTextBox_Enter(object sender, EventArgs e)
+        {
+            if (SpecificTextBox.Text == "[Search Value]")
+            {
+                SpecificTextBox.ForeColor = Color.Black;
+                SpecificTextBox.Text = "";
+            }
+        }
+
+        private void SpecificTextBox_Leave(object sender, EventArgs e)
+        {
+            if (SpecificTextBox.Text == "")
+            {
+                SpecificTextBox.ForeColor = Color.Gray;
+                SpecificTextBox.Text = "[Search Value]";
+            }
+        }
+
+        private void SpecificBTN_Click(object sender, EventArgs e)
+        {
+            if (UInt32.TryParse(SpecificTextBox.Text, out val))
+            {
+                MemoryScan.ConditionEquals(val);
+                PopulateMatches();
             }
         }
     }

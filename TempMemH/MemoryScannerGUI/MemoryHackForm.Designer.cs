@@ -37,6 +37,9 @@
             this.StartValueBox = new System.Windows.Forms.TextBox();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.MemoryTab = new System.Windows.Forms.TabPage();
+            this.SpecificTextBox = new System.Windows.Forms.TextBox();
+            this.SpecificBTN = new System.Windows.Forms.Button();
+            this.AddressBox = new System.Windows.Forms.TextBox();
             this.refresh_memoryBTN = new System.Windows.Forms.Button();
             this.Prev100 = new System.Windows.Forms.Button();
             this.Next100 = new System.Windows.Forms.Button();
@@ -60,7 +63,6 @@
             this.ValueCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
-            this.AddressBox = new System.Windows.Forms.TextBox();
             this.MainTabControl.SuspendLayout();
             this.ProcessTab.SuspendLayout();
             this.MemoryTab.SuspendLayout();
@@ -149,6 +151,8 @@
             // MemoryTab
             // 
             this.MemoryTab.BackColor = System.Drawing.Color.White;
+            this.MemoryTab.Controls.Add(this.SpecificTextBox);
+            this.MemoryTab.Controls.Add(this.SpecificBTN);
             this.MemoryTab.Controls.Add(this.AddressBox);
             this.MemoryTab.Controls.Add(this.refresh_memoryBTN);
             this.MemoryTab.Controls.Add(this.Prev100);
@@ -176,9 +180,44 @@
             this.MemoryTab.TabIndex = 1;
             this.MemoryTab.Text = "Memory";
             // 
+            // SpecificTextBox
+            // 
+            this.SpecificTextBox.ForeColor = System.Drawing.Color.Gray;
+            this.SpecificTextBox.Location = new System.Drawing.Point(295, 282);
+            this.SpecificTextBox.MaxLength = 10;
+            this.SpecificTextBox.Name = "SpecificTextBox";
+            this.SpecificTextBox.Size = new System.Drawing.Size(91, 20);
+            this.SpecificTextBox.TabIndex = 20;
+            this.SpecificTextBox.Text = "[Search Value]";
+            this.SpecificTextBox.Enter += new System.EventHandler(this.SpecificTextBox_Enter);
+            this.SpecificTextBox.Leave += new System.EventHandler(this.SpecificTextBox_Leave);
+            // 
+            // SpecificBTN
+            // 
+            this.SpecificBTN.Location = new System.Drawing.Point(207, 279);
+            this.SpecificBTN.Name = "SpecificBTN";
+            this.SpecificBTN.Size = new System.Drawing.Size(75, 23);
+            this.SpecificBTN.TabIndex = 19;
+            this.SpecificBTN.Text = "Specific";
+            this.SpecificBTN.UseVisualStyleBackColor = true;
+            this.SpecificBTN.Click += new System.EventHandler(this.SpecificBTN_Click);
+            // 
+            // AddressBox
+            // 
+            this.AddressBox.ForeColor = System.Drawing.Color.Gray;
+            this.AddressBox.Location = new System.Drawing.Point(295, 216);
+            this.AddressBox.MaxLength = 10;
+            this.AddressBox.Name = "AddressBox";
+            this.AddressBox.Size = new System.Drawing.Size(91, 20);
+            this.AddressBox.TabIndex = 18;
+            this.AddressBox.Text = "[Address]";
+            this.AddressBox.TextChanged += new System.EventHandler(this.AddressBox_TextChanged);
+            this.AddressBox.Enter += new System.EventHandler(this.AddressBox_Enter);
+            this.AddressBox.Leave += new System.EventHandler(this.AddressBox_Leave);
+            // 
             // refresh_memoryBTN
             // 
-            this.refresh_memoryBTN.Location = new System.Drawing.Point(213, 324);
+            this.refresh_memoryBTN.Location = new System.Drawing.Point(207, 324);
             this.refresh_memoryBTN.Name = "refresh_memoryBTN";
             this.refresh_memoryBTN.Size = new System.Drawing.Size(75, 23);
             this.refresh_memoryBTN.TabIndex = 13;
@@ -188,7 +227,7 @@
             // 
             // Prev100
             // 
-            this.Prev100.Location = new System.Drawing.Point(214, 353);
+            this.Prev100.Location = new System.Drawing.Point(207, 353);
             this.Prev100.Name = "Prev100";
             this.Prev100.Size = new System.Drawing.Size(75, 23);
             this.Prev100.TabIndex = 15;
@@ -198,7 +237,7 @@
             // 
             // Next100
             // 
-            this.Next100.Location = new System.Drawing.Point(311, 353);
+            this.Next100.Location = new System.Drawing.Point(317, 353);
             this.Next100.Name = "Next100";
             this.Next100.Size = new System.Drawing.Size(75, 23);
             this.Next100.TabIndex = 16;
@@ -225,7 +264,7 @@
             // 
             // EditValueBtn
             // 
-            this.EditValueBtn.Location = new System.Drawing.Point(207, 258);
+            this.EditValueBtn.Location = new System.Drawing.Point(207, 226);
             this.EditValueBtn.Name = "EditValueBtn";
             this.EditValueBtn.Size = new System.Drawing.Size(82, 23);
             this.EditValueBtn.TabIndex = 12;
@@ -236,7 +275,7 @@
             // EditValueBox
             // 
             this.EditValueBox.ForeColor = System.Drawing.Color.Gray;
-            this.EditValueBox.Location = new System.Drawing.Point(295, 274);
+            this.EditValueBox.Location = new System.Drawing.Point(295, 242);
             this.EditValueBox.MaxLength = 10;
             this.EditValueBox.Name = "EditValueBox";
             this.EditValueBox.Size = new System.Drawing.Size(91, 20);
@@ -247,8 +286,8 @@
             // 
             // BetweenBox
             // 
-            this.BetweenBox.Location = new System.Drawing.Point(250, 204);
-            this.BetweenBox.MaxLength = 9;
+            this.BetweenBox.Location = new System.Drawing.Point(250, 174);
+            this.BetweenBox.MaxLength = 10;
             this.BetweenBox.Name = "BetweenBox";
             this.BetweenBox.Size = new System.Drawing.Size(94, 20);
             this.BetweenBox.TabIndex = 9;
@@ -256,7 +295,7 @@
             // LessThanBtn
             // 
             this.LessThanBtn.Font = new System.Drawing.Font("Monotype Corsiva", 17.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
-            this.LessThanBtn.Location = new System.Drawing.Point(345, 196);
+            this.LessThanBtn.Location = new System.Drawing.Point(347, 164);
             this.LessThanBtn.Name = "LessThanBtn";
             this.LessThanBtn.Size = new System.Drawing.Size(42, 35);
             this.LessThanBtn.TabIndex = 10;
@@ -267,7 +306,7 @@
             // GreaterThanBtn
             // 
             this.GreaterThanBtn.Font = new System.Drawing.Font("Monotype Corsiva", 17.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
-            this.GreaterThanBtn.Location = new System.Drawing.Point(205, 196);
+            this.GreaterThanBtn.Location = new System.Drawing.Point(205, 164);
             this.GreaterThanBtn.Name = "GreaterThanBtn";
             this.GreaterThanBtn.Size = new System.Drawing.Size(42, 35);
             this.GreaterThanBtn.TabIndex = 8;
@@ -297,8 +336,8 @@
             // 
             // ChangedbyBox
             // 
-            this.ChangedbyBox.Location = new System.Drawing.Point(248, 146);
-            this.ChangedbyBox.MaxLength = 6;
+            this.ChangedbyBox.Location = new System.Drawing.Point(248, 117);
+            this.ChangedbyBox.MaxLength = 10;
             this.ChangedbyBox.Name = "ChangedbyBox";
             this.ChangedbyBox.Size = new System.Drawing.Size(99, 20);
             this.ChangedbyBox.TabIndex = 5;
@@ -306,7 +345,7 @@
             // DecreasedbyBTN
             // 
             this.DecreasedbyBTN.Font = new System.Drawing.Font("Monotype Corsiva", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DecreasedbyBTN.Location = new System.Drawing.Point(348, 139);
+            this.DecreasedbyBTN.Location = new System.Drawing.Point(347, 117);
             this.DecreasedbyBTN.Name = "DecreasedbyBTN";
             this.DecreasedbyBTN.Size = new System.Drawing.Size(42, 35);
             this.DecreasedbyBTN.TabIndex = 7;
@@ -317,7 +356,7 @@
             // IncreasedByButton
             // 
             this.IncreasedByButton.Font = new System.Drawing.Font("Monotype Corsiva", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IncreasedByButton.Location = new System.Drawing.Point(205, 138);
+            this.IncreasedByButton.Location = new System.Drawing.Point(205, 117);
             this.IncreasedByButton.Name = "IncreasedByButton";
             this.IncreasedByButton.Size = new System.Drawing.Size(42, 35);
             this.IncreasedByButton.TabIndex = 5;
@@ -394,18 +433,6 @@
             this.lineShape1.Y1 = -3;
             this.lineShape1.Y2 = 20;
             // 
-            // AddressBox
-            // 
-            this.AddressBox.ForeColor = System.Drawing.Color.Gray;
-            this.AddressBox.Location = new System.Drawing.Point(295, 248);
-            this.AddressBox.MaxLength = 10;
-            this.AddressBox.Name = "AddressBox";
-            this.AddressBox.Size = new System.Drawing.Size(91, 20);
-            this.AddressBox.TabIndex = 18;
-            this.AddressBox.Text = "[Address]";
-            this.AddressBox.Enter += new System.EventHandler(this.AddressBox_Enter);
-            this.AddressBox.Leave += new System.EventHandler(this.AddressBox_Leave);
-            // 
             // MemScanForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -459,6 +486,8 @@
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
         private System.Windows.Forms.Button refresh_memoryBTN;
         private System.Windows.Forms.TextBox AddressBox;
+        private System.Windows.Forms.TextBox SpecificTextBox;
+        private System.Windows.Forms.Button SpecificBTN;
     }
 }
 

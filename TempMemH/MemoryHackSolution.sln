@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryScannerWrapper", "TempMemH\MemoryScannerWrapper.csproj", "{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryScannerGUI", "MemoryScannerGUI\MemoryScannerGUI.csproj", "{E43B142A-71FA-4EA1-B793-4949F51691EF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MemCDll", "..\MemHack\MemCDll\MemCDll.vcxproj", "{7ECB41AA-7830-4AC0-8801-8E7E4E7055C7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MemoryDLL", "..\MemHack\MemCDll\MemCDll.vcxproj", "{7ECB41AA-7830-4AC0-8801-8E7E4E7055C7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MemHack", "..\MemHack\MemHack\MemHack.vcxproj", "{29DBF6B0-25EA-4A2E-A595-E5A5409F1620}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MemoryHack", "..\MemHack\MemHack\MemHack.vcxproj", "{29DBF6B0-25EA-4A2E-A595-E5A5409F1620}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,22 +19,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Debug|Win32.ActiveCfg = Debug|x86
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Debug|Win32.Build.0 = Debug|x86
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Debug|x86.ActiveCfg = Debug|x86
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Debug|x86.Build.0 = Debug|x86
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Release|Mixed Platforms.Build.0 = Release|x86
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Release|Win32.ActiveCfg = Release|x86
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Release|Win32.Build.0 = Release|x86
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Release|x86.ActiveCfg = Release|x86
-		{AE6A6BD0-C6DA-45CE-A464-A926874DD0E7}.Release|x86.Build.0 = Release|x86
 		{E43B142A-71FA-4EA1-B793-4949F51691EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E43B142A-71FA-4EA1-B793-4949F51691EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E43B142A-71FA-4EA1-B793-4949F51691EF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
