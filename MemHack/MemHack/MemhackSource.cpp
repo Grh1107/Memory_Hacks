@@ -234,12 +234,15 @@ bool bMBhasMatch = false;
 
 	void free_scan (MEMBLOCK *mb_list)
 	{
-		CloseHandle(mb_list->hProc);
-		while(mb_list)
+		if (mb_list != NULL)
 		{
-			MEMBLOCK *mb = mb_list;
-			mb_list = mb_list->next;
-			free_memblock(mb);
+			CloseHandle(mb_list->hProc);
+			while(mb_list)
+			{
+				MEMBLOCK *mb = mb_list;
+				mb_list = mb_list->next;
+				free_memblock(mb);
+			}
 		}
 	}
 	//prolly signed

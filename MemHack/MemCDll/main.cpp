@@ -1,5 +1,5 @@
-#include "C:\Users\Grant\documents\visual studio 2012\Projects\MemHack\MemHack\MemHack.h"
-#include "C:\Users\Grant\documents\visual studio 2012\Projects\MemHack\MemHack\MemhackSource.cpp"
+#include "..\..\MemHack\MemHack\MemHack.h"
+#include "..\..\MemHack\MemHack\MemhackSource.cpp"
 
 extern "C" __declspec(dllexport) void Run_scan(void)
 {

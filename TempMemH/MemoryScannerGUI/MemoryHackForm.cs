@@ -424,5 +424,18 @@ namespace MemoryScannerGUI
                 PopulateMatches();
             }
         }
+
+        private void MainTabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            TabPage Current = (sender as TabControl).SelectedTab;
+            if (Current == MainTabControl.Controls[0])
+            {
+                DialogResult dialogResult = MessageBox.Show("Changing Tabs Will Lose Current Results, Proceed to Change Tab?", "Data Loss Prevention", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    MemoryScan.Free_Scan();
+                }
+            }
+        }
     }
 }
