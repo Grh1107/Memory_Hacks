@@ -41,20 +41,19 @@ namespace MemoryScannerGUI
             MainTabControl.Dock = DockStyle.Fill;
         }
         Process[] ProcessList;
-        int TotalProcesses = 0;
         public void PopulateProcesses()
         {
                 ProcessList = Process.GetProcesses();
                 ProcessListView.Items.Clear();
                 
-                TotalProcesses = 0;
                 foreach (Process proc in ProcessList)
                 {
 
-                    ProcessListView.Items.Add(proc.ProcessName);
-                    ProcessListView.Items[TotalProcesses].SubItems.Add(proc.Id.ToString());
-                    ProcessListView.Items[TotalProcesses].Tag = proc.Id;
-                    ++TotalProcesses;
+                    ListViewItem Lvi = new ListViewItem(proc.ProcessName);
+                    Lvi.SubItems.Add(proc.Id.ToString());
+                    Lvi.Tag = proc.Id;
+                    ProcessListView.Items.Add(Lvi);
+
                 }
         }
 
@@ -235,10 +234,11 @@ namespace MemoryScannerGUI
                 
                 if (I < 100)
                 {
-                    MemoryInfoList.Items.Add(I.ToString());
-                    MemoryInfoList.Items[I].SubItems.Add("0x" + Matches[I].addr.ToString("X"));
-                    MemoryInfoList.Items[I].SubItems.Add(Matches[I].val.ToString());
-                    MemoryInfoList.Items[I].Tag = Matches[I].addr;
+                    ListViewItem LVI = new ListViewItem(I.ToString());
+                    LVI.SubItems.Add("0x" + Matches[I].addr.ToString("X"));
+                    LVI.SubItems.Add(Matches[I].val.ToString());
+                    LVI.Tag = Matches[I].addr;
+                    MemoryInfoList.Items.Add(LVI); 
                     MatchIndex = I;
                 }
             }
@@ -252,10 +252,11 @@ namespace MemoryScannerGUI
                 int I;
                 for (I = MatchIndex+1; I <= MatchIndex + 100 && I < Matches.Count; I++)
                 {
-                    MemoryInfoList.Items.Add(I.ToString());
-                    MemoryInfoList.Items[I%100].SubItems.Add("0x" + Matches[I].addr.ToString("X"));
-                    MemoryInfoList.Items[I%100].SubItems.Add(Matches[I].val.ToString());
-                    MemoryInfoList.Items[I%100].Tag = Matches[I].addr;   
+                    ListViewItem LVI = new ListViewItem(I.ToString());
+                    LVI.SubItems.Add("0x" + Matches[I].addr.ToString("X"));
+                    LVI.SubItems.Add(Matches[I].val.ToString());
+                    LVI.Tag = Matches[I].addr;
+                    MemoryInfoList.Items.Add(LVI);   
                 }
                 MatchIndex = I-1;
             }
@@ -280,10 +281,11 @@ namespace MemoryScannerGUI
                 }
                 for ( ; I < MatchIndex - PageI && I < Matches.Count; I++)
                 {
-                    MemoryInfoList.Items.Add(I.ToString());
-                    MemoryInfoList.Items[I%100].SubItems.Add("0x" + Matches[I].addr.ToString("X"));
-                    MemoryInfoList.Items[I % 100].SubItems.Add(Matches[I].val.ToString());
-                    MemoryInfoList.Items[I % 100].Tag = Matches[I].addr;
+                    ListViewItem LVI = new ListViewItem(I.ToString());
+                    LVI.SubItems.Add("0x" + Matches[I].addr.ToString("X"));
+                    LVI.SubItems.Add(Matches[I].val.ToString());
+                    LVI.Tag = Matches[I].addr;
+                    MemoryInfoList.Items.Add(LVI);
                 }
                 MatchIndex = I-1;
             }
@@ -306,12 +308,12 @@ namespace MemoryScannerGUI
 
             for (; startIndex < lastIndex+1 && startIndex < Matches.Count; startIndex++)
             {
-                MemoryInfoList.Items.Add(startIndex.ToString());
-                MemoryInfoList.Items[startIndex % 100].SubItems.Add("0x" + Matches[startIndex].addr.ToString("X"));
-                MemoryInfoList.Items[startIndex % 100].SubItems.Add(Matches[startIndex].val.ToString());
-                MemoryInfoList.Items[startIndex % 100].Tag = Matches[startIndex].addr;
-            }
-            MatchIndex = startIndex - 1;
+                ListViewItem LVI = new ListViewItem(startIndex.ToString());
+                LVI.SubItems.Add("0x" + Matches[startIndex].addr.ToString("X"));
+                LVI.SubItems.Add(Matches[startIndex].val.ToString());
+                LVI.Tag = Matches[startIndex].addr;
+                MemoryInfoList.Items.Add(LVI);}
+                MatchIndex = startIndex - 1;
         }
 
         private void Next100_Click(object sender, EventArgs e)
@@ -376,7 +378,8 @@ namespace MemoryScannerGUI
         {
             if (MemoryInfoList.SelectedItems.Count > 0)
             {
-                AddressBox.Text = "0x"+ addr.ToString("X");
+                uint MemValue = (uint)MemoryInfoList.SelectedItems[0].Tag;
+                AddressBox.Text = "0x" + MemValue.ToString("X");
             }
         }
 
@@ -435,7 +438,30 @@ namespace MemoryScannerGUI
                 {
                     MemoryScan.Free_Scan();
                 }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
         }
+
+        private void ChangedbyBox_Enter(object sender, EventArgs e)
+        {
+            if (ChangedbyBox.Text == "[Changed by]")
+            {
+                ChangedbyBox.ForeColor = Color.Black;
+                ChangedbyBox.Text = "";
+            }
+        }
+
+        private void ChangedbyBox_Leave(object sender, EventArgs e)
+        {
+            if (ChangedbyBox.Text == "")
+            {
+                ChangedbyBox.ForeColor = Color.Gray;
+                ChangedbyBox.Text = "[Changed by]";
+            }
+        }
+
     }
 }

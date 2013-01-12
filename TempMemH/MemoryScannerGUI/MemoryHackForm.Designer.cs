@@ -337,11 +337,15 @@
             // 
             // ChangedbyBox
             // 
+            this.ChangedbyBox.ForeColor = System.Drawing.Color.Gray;
             this.ChangedbyBox.Location = new System.Drawing.Point(248, 117);
             this.ChangedbyBox.MaxLength = 10;
             this.ChangedbyBox.Name = "ChangedbyBox";
             this.ChangedbyBox.Size = new System.Drawing.Size(99, 20);
             this.ChangedbyBox.TabIndex = 5;
+            this.ChangedbyBox.Text = "[Changed by]";
+            this.ChangedbyBox.Enter += new System.EventHandler(this.ChangedbyBox_Enter);
+            this.ChangedbyBox.Leave += new System.EventHandler(this.ChangedbyBox_Leave);
             // 
             // DecreasedbyBTN
             // 

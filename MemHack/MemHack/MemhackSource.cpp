@@ -243,6 +243,7 @@ bool bMBhasMatch = false;
 				mb_list = mb_list->next;
 				free_memblock(mb);
 			}
+			INITscan = NULL;
 		}
 	}
 	//prolly signed
