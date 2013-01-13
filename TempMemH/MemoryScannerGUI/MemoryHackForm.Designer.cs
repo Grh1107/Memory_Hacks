@@ -124,7 +124,7 @@
             this.DataBox.Name = "DataBox";
             this.DataBox.Size = new System.Drawing.Size(106, 20);
             this.DataBox.TabIndex = 4;
-            this.DataBox.Text = "Data Size";
+            this.DataBox.Text = "[Data Size]";
             this.DataBox.Enter += new System.EventHandler(this.DataBox_Enter);
             this.DataBox.Leave += new System.EventHandler(this.DataBox_Leave);
             // 
@@ -135,7 +135,7 @@
             this.StartValueBox.Name = "StartValueBox";
             this.StartValueBox.Size = new System.Drawing.Size(105, 20);
             this.StartValueBox.TabIndex = 1;
-            this.StartValueBox.Text = "Initial Search Value";
+            this.StartValueBox.Text = "[Initial Search Value]";
             this.StartValueBox.Enter += new System.EventHandler(this.StartValueBox_Enter);
             this.StartValueBox.Leave += new System.EventHandler(this.StartValueBox_Leave);
             // 
@@ -287,11 +287,15 @@
             // 
             // BetweenBox
             // 
+            this.BetweenBox.ForeColor = System.Drawing.Color.Gray;
             this.BetweenBox.Location = new System.Drawing.Point(250, 174);
             this.BetweenBox.MaxLength = 10;
             this.BetweenBox.Name = "BetweenBox";
             this.BetweenBox.Size = new System.Drawing.Size(94, 20);
             this.BetweenBox.TabIndex = 9;
+            this.BetweenBox.Text = "[Greater]-[Less]";
+            this.BetweenBox.Enter += new System.EventHandler(this.BetweenBox_Enter);
+            this.BetweenBox.Leave += new System.EventHandler(this.BetweenBox_Leave);
             // 
             // LessThanBtn
             // 

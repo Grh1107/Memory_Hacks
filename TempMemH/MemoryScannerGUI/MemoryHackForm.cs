@@ -25,7 +25,6 @@ namespace MemoryScannerGUI
         int _dataSize;
         int _searchValue;
         bool _validInfo = true;
-        bool hasData = false;
         bool hasValue = false;
         bool _validAddress = false;
         UInt32 val;
@@ -64,65 +63,60 @@ namespace MemoryScannerGUI
 
         private void ProcessListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (_validInfo)
+                
+            Int32.TryParse(DataBox.Text, out _dataSize);
+            if (_dataSize == 0)
             {
-                _dataSize = (hasData) ? Convert.ToInt32(DataBox.Text) : 4;
-                if (hasValue) 
-                {
-                    _searchValue = Convert.ToInt32(StartValueBox.Text);
-                } 
-                else 
-                {
-                    _searchValue = 0;   
-                }
-                PID = (int)ProcessListView.SelectedItems[0].Tag;
-
-                if (hasValue)
-                {
-                    MemoryScan.ConditionalScan((ulong)PID, _dataSize, (UInt32)_searchValue); 
-                }
-                else
-                {
-                    MemoryScan.UnconditionalScan((ulong)PID, _dataSize);                  
-                }
-                MainTabControl.SelectTab(1);
-                SearchInitialized = true;
-                PopulateMatches();
+                _dataSize = 4;
             }
+            if (hasValue) 
+            {
+                if (!Int32.TryParse(StartValueBox.Text, out _searchValue))
+                {
+                    MessageBox.Show("Failed to Parse Search Value");
+                    return;
+                }
+            } 
+            else 
+            {
+                _searchValue = 0;   
+            }
+            this.Cursor = Cursors.WaitCursor;
+            PID = (int)ProcessListView.SelectedItems[0].Tag;
+
+            if (hasValue)
+            {
+                MemoryScan.ConditionalScan((ulong)PID, _dataSize, (UInt32)_searchValue); 
+            }
+            else
+            {
+                MemoryScan.UnconditionalScan((ulong)PID, _dataSize);                  
+            }
+            MainTabControl.SelectTab(1);
+            SearchInitialized = true;
+            PopulateMatches();
+            this.Cursor = Cursors.Default;
         }
 
         private void DataBox_Enter(object sender, EventArgs e)
         {
-            DataBox.Text = "";
-            DataBox.ForeColor = Color.Black;
-            hasData = true;
+            CaptionEnter(DataBox, "[Data Size]");
         }
 
         private void DataBox_Leave(object sender, EventArgs e)
         {
-            DataBox.ForeColor = Color.Gray;
-            if (DataBox.Text == "")
-            {
-                DataBox.Text = "Data Size";
-                hasData = false;
-            }
+            CaptionLeave(DataBox, "[Data Size]");
         }
 
         private void StartValueBox_Enter(object sender, EventArgs e)
         {
-            StartValueBox.Text = "";
-            StartValueBox.ForeColor = Color.Black;
             hasValue = true;
+            CaptionEnter(StartValueBox, "[Initial Search Value]");
         }
 
         private void StartValueBox_Leave(object sender, EventArgs e)
         {
-            StartValueBox.ForeColor = Color.Gray;
-            if (StartValueBox.Text == "")
-            {
-                StartValueBox.Text = "Initial Search Value";
-                hasValue = false;
-            }
+            hasValue = !CaptionLeave(StartValueBox, "[Initial Search Value]");   
         }
 
         private void Increasedbutton_Click(object sender, EventArgs e)
@@ -339,39 +333,23 @@ namespace MemoryScannerGUI
 
         private void AddressBox_Enter(object sender, EventArgs e)
         {
-            if (AddressBox.Text == "[Address]")
-            {
-                AddressBox.ForeColor = Color.Black;
-                AddressBox.Text = "";
-            }
-
+            CaptionEnter(AddressBox, "[Address]");
         }
 
         private void AddressBox_Leave(object sender, EventArgs e)
         {
-            if (AddressBox.Text == "")
-            {
-                AddressBox.ForeColor = Color.Gray;
-                AddressBox.Text = "[Address]";
-            }
+            CaptionLeave(AddressBox, "[Address]");
         }
 
         private void EditValueBox_Enter(object sender, EventArgs e)
         {
-            if (EditValueBox.Text == "[Value]")
-            {
-                EditValueBox.ForeColor = Color.Black;
-                EditValueBox.Text = "";
-            }
+            CaptionEnter(EditValueBox, "[Value]");
         }
 
         private void EditValueBox_Leave(object sender, EventArgs e)
         {
-            if (EditValueBox.Text == "")
-            {
-                EditValueBox.ForeColor = Color.Gray;
-                EditValueBox.Text = "[Value]";
-            }
+            CaptionLeave(EditValueBox, "[Value]");
+
         }
 
         private void MemoryInfoList_SelectedIndexChanged(object sender, EventArgs e)
@@ -385,38 +363,29 @@ namespace MemoryScannerGUI
 
         private void AddressBox_TextChanged(object sender, EventArgs e)
         {
-            _validAddress = true;
+            _validAddress = false;
             string HexAddress = AddressBox.Text;
-            if(HexAddress.Substring(0, 2) == "0x")
+            if(HexAddress.Length > 2 && HexAddress.Substring(0, 2) == "0x")
             {
                 HexAddress = HexAddress.Substring(2, HexAddress.Length-2);
             }
             try
             {
                 addr = Convert.ToUInt32(HexAddress, 16);
+                _validAddress = true;
             }
             catch
-            {
-                _validAddress = false;
-            }
+            {}
         }
 
         private void SpecificTextBox_Enter(object sender, EventArgs e)
         {
-            if (SpecificTextBox.Text == "[Search Value]")
-            {
-                SpecificTextBox.ForeColor = Color.Black;
-                SpecificTextBox.Text = "";
-            }
+            CaptionEnter(SpecificTextBox, "[Search Value]");
         }
 
         private void SpecificTextBox_Leave(object sender, EventArgs e)
         {
-            if (SpecificTextBox.Text == "")
-            {
-                SpecificTextBox.ForeColor = Color.Gray;
-                SpecificTextBox.Text = "[Search Value]";
-            }
+            CaptionLeave(SpecificTextBox, "[Search Value]");
         }
 
         private void SpecificBTN_Click(object sender, EventArgs e)
@@ -447,20 +416,45 @@ namespace MemoryScannerGUI
 
         private void ChangedbyBox_Enter(object sender, EventArgs e)
         {
-            if (ChangedbyBox.Text == "[Changed by]")
-            {
-                ChangedbyBox.ForeColor = Color.Black;
-                ChangedbyBox.Text = "";
-            }
+            CaptionEnter(ChangedbyBox, "[Changed by]");
         }
 
         private void ChangedbyBox_Leave(object sender, EventArgs e)
         {
-            if (ChangedbyBox.Text == "")
+            CaptionLeave(ChangedbyBox, "[Changed by]");
+        }
+
+        private void BetweenBox_Enter(object sender, EventArgs e)
+        {
+            CaptionEnter(BetweenBox, "[Greater]-[Less]");
+        }
+
+        private void BetweenBox_Leave(object sender, EventArgs e)
+        {
+            CaptionLeave(BetweenBox, "[Greater]-[Less]");
+        }
+
+        private bool CaptionEnter(TextBox T, string Caption)
+        {
+            bool TextChanged = false;
+            if (T.Text == Caption)
             {
-                ChangedbyBox.ForeColor = Color.Gray;
-                ChangedbyBox.Text = "[Changed by]";
+                T.ForeColor = Color.Black;
+                T.Text = "";
+                TextChanged = true;
             }
+            return TextChanged;
+        }
+        private bool CaptionLeave(TextBox T, string Caption)
+        {
+            bool TextChanged = false;            
+            if (T.Text == "")
+            {
+                T.ForeColor = Color.Gray;
+                T.Text = Caption;
+                TextChanged = true;
+            }
+            return TextChanged;
         }
 
     }

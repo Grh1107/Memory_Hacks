@@ -167,10 +167,10 @@ bool bMBhasMatch = false;
 								is_match = (temp_val==(prev_val-val));
 								break;
 							case COND_GREATERTHAN:
-								is_match = (temp_val > val);
+								is_match = ((int)temp_val > (int)val);
 								break;
 							case COND_LESSTHAN:
-								is_match = (temp_val < val);
+								is_match = ((int)temp_val < (int)val);
 								break;
 							default:
 								break;
